@@ -16,7 +16,9 @@ function addCourse(event){
 }
 
 function readCourse(chosenCourse){
-    //Crea un objeto con los datos de cada curso seleccionado//
+    let LScourses;
+    LScourses = getFromLocal();
+    
     const courseCard = {
         image: chosenCourse.querySelector('img').src,
         title: chosenCourse.querySelector('h4').innerText,
@@ -24,19 +26,15 @@ function readCourse(chosenCourse){
         id: chosenCourse.querySelector('a').getAttribute('data-id')
     }
     
-    let chosenId = parseInt(courseCard.id);
-    
-    if (idArr.indexOf(chosenId) === -1) {
-        idArr.push(chosenId); 
+    if(LScourses.map(obj => obj.id).indexOf(courseCard.id) === -1){
         renderInCart(courseCard);
-        
-    } else {
-        idArr.splice(chosenId, 1);    
-    }   
+    }else{
+        alert('Este curso ya está en el carrito')
+    }
+    
 }
 
 function renderInCart(courseCard){
-    //Pinta el curso seleccionado en el carrito//
     const row = document.createElement('tr');
     row.innerHTML = `<td><img src="${courseCard.image}" width=100></td>
     <td>${courseCard.title}</td>
